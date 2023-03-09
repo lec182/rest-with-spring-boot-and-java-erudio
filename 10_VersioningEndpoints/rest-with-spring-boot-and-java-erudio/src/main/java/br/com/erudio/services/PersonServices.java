@@ -7,10 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.erudio.exceptions.ResourceNotFoundException;
-import br.com.erudio.mapper.DozerMapper;
 import br.com.erudio.model.Person;
 import br.com.erudio.repositories.PersonRepository;
-import br.com.erudio.vo.v1.PersonVO;
 
 @Service
 public class PersonServices {
@@ -20,33 +18,29 @@ public class PersonServices {
 	@Autowired
 	PersonRepository repository;
 	
-	public List<PersonVO> findAll() {
+	public List<Person> findAll() {
 		
 		logger.info("Finding all people!");
 		
-		return DozerMapper.parseListObjects(repository.findAll(), PersonVO.class) ;
+		return repository.findAll();
 	}
 	
-	public PersonVO findById(Long id) {
+	public Person findById(Long id) {
 		
 		logger.info("Finding one person!");
 		
-		var entity = repository.findById(id)
+		return repository.findById(id)
 				.orElseThrow(() -> new ResourceNotFoundException("No records found for this ID"));
-		return DozerMapper.parseObject(entity, PersonVO.class);
 	}
 	
-	public PersonVO create(PersonVO person) {
+	public Person create(Person person) {
 		
 		logger.info("Creating one person!");
-		var entity = DozerMapper.parseObject(person, Person.class);
 		
-		var vo = DozerMapper.parseObject(repository.save(entity), PersonVO.class);
-		return vo;
-		
+		return repository.save(person);
 	}
 	
-	public PersonVO update(PersonVO person) {
+	public Person update(Person person) {
 		
 		logger.info("Updating one person!");
 		
@@ -58,8 +52,7 @@ public class PersonServices {
 		entity.setAddress(person.getAddress());
 		entity.setGender(person.getGender());
 		
-		var vo = DozerMapper.parseObject(repository.save(entity), PersonVO.class);
-		return vo;
+		return repository.save(person);
 	}
 	
 	public void delete(Long id) {
@@ -69,7 +62,7 @@ public class PersonServices {
 		var entity = repository.findById(id)
 				.orElseThrow(() -> new ResourceNotFoundException("No records found for this ID"));
 
-		repository.delete(entity);
+		repository.delete((Person) entity);
 	}
 
 }
