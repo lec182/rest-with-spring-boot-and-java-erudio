@@ -26,7 +26,7 @@ public class BookServices {
 
 	public List<BookVO> findAll() {
 
-		logger.info("Finding all books!");
+		logger.info("Finding all book!");
 
 		var books = DozerMapper.parseListObjects(repository.findAll(), BookVO.class);
 		books
@@ -48,7 +48,7 @@ public class BookServices {
 	
 	public BookVO create(BookVO book) {
 
-		if(book == null) throw new RequiredObjectIsNullException();
+		if (book == null) throw new RequiredObjectIsNullException();
 		
 		logger.info("Creating one book!");
 		var entity = DozerMapper.parseObject(book, Book.class);
@@ -59,7 +59,7 @@ public class BookServices {
 	
 	public BookVO update(BookVO book) {
 
-		if(book == null) throw new RequiredObjectIsNullException();
+		if (book == null) throw new RequiredObjectIsNullException();
 		
 		logger.info("Updating one book!");
 		
