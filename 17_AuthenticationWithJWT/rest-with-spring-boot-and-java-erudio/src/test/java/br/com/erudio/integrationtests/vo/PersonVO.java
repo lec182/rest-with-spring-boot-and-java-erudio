@@ -2,11 +2,6 @@ package br.com.erudio.integrationtests.vo;
 
 import java.io.Serializable;
 
-import org.springframework.hateoas.RepresentationModel;
-
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import com.github.dozermapper.core.Mapping;
 
 public class PersonVO implements Serializable {
 
@@ -19,7 +14,7 @@ public class PersonVO implements Serializable {
 	private String gender;
 	
 	public PersonVO() {}
-	
+
 	public Long getId() {
 		return id;
 	}
